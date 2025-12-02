@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결제 완료 - Stasis: Civil War</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <style>
+        .result-section {
+            min-height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .result-container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .result-card {
+            background-color: rgba(22, 33, 62, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            text-align: center;
+        }
+
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .result-icon.success {
+            color: #4caf50;
+        }
+
+        .result-title {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .result-message {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .order-info {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .order-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .order-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .order-info-label {
+            color: var(--text-secondary);
+        }
+
+        .order-info-value {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--highlight-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #1e4a7a;
+            transform: translateY(-2px);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--gold);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .result-card {
+                padding: 40px 30px;
+            }
+
+            .result-icon {
+                font-size: 4rem;
+            }
+
+            .result-title {
+                font-size: 1.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1><a href="index.html" style="color: var(--gold); text-decoration: none;">Stasis: Civil War</a></h1>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 결과 섹션 -->
+    <section class="result-section">
+        <div class="result-container">
+            <div class="result-card">
+                <div id="loading-state">
+                    <div class="loading"></div>
+                    <p style="margin-top: 20px; color: var(--text-secondary);">결제를 확인하는 중...</p>
+                </div>
+
+                <div id="success-state" style="display: none;">
+                    <div class="result-icon success">✓</div>
+                    <h1 class="result-title">결제가 완료되었습니다!</h1>
+                    <p class="result-message">
+                        게임 구매가 성공적으로 완료되었습니다.<br>
+                        구매하신 게임은 라이브러리에서 확인하실 수 있습니다.
+                    </p>
+
+                    <div class="order-info">
+                        <div class="order-info-row">
+                            <span class="order-info-label">주문번호</span>
+                            <span class="order-info-value" id="order-id">-</span>
+                        </div>
+                        <div class="order-info-row">
+                            <span class="order-info-label">결제 금액</span>
+                            <span class="order-info-value" id="payment-amount">-</span>
+                        </div>
+                        <div class="order-info-row">
+                            <span class="order-info-label">결제 수단</span>
+                            <span class="order-info-value" id="payment-method">-</span>
+                        </div>
+                        <div class="order-info-row">
+                            <span class="order-info-label">주문 상품</span>
+                            <span class="order-info-value" id="order-name">-</span>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="library.html" class="btn btn-primary">라이브러리로 이동</a>
+                        <a href="index.html" class="btn btn-secondary">홈으로</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/APIClient.js"></script>
+    <script src="js/AuthModule.js"></script>
+    <script src="js/CartModule.js"></script>
+    <script>
+        // URL 파라미터에서 결제 정보 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentKey = urlParams.get('paymentKey');
+        const orderId = urlParams.get('orderId');
+        const amount = urlParams.get('amount');
+
+        // 결제 승인 처리
+        async function confirmPayment() {
+            try {
+                // 백엔드로 결제 승인 요청
+                const response = await APIClient.post('/api/payments/confirm', {
+                    paymentKey,
+                    orderId,
+                    amount: parseInt(amount)
+                });
+
+                // 성공 시 UI 업데이트
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('success-state').style.display = 'block';
+
+                // 주문 정보 표시
+                document.getElementById('order-id').textContent = response.orderId || orderId;
+                document.getElementById('payment-amount').textContent = CartModule.formatPrice(response.totalAmount || amount);
+                document.getElementById('payment-method').textContent = getPaymentMethodName(response.method);
+                document.getElementById('order-name').textContent = response.orderName || '게임 구매';
+
+                // 장바구니 비우기
+                CartModule.clearCart();
+                localStorage.removeItem('selected_cart_items');
+
+            } catch (error) {
+                console.error('Payment confirmation failed:', error);
+                alert('결제 승인 처리 중 오류가 발생했습니다.');
+                window.location.href = 'fail.html?message=' + encodeURIComponent(error.message);
+            }
+        }
+
+        // 결제 수단 이름 변환
+        function getPaymentMethodName(method) {
+            const methods = {
+                'CARD': '신용/체크카드',
+                'TRANSFER': '계좌이체',
+                'VIRTUAL_ACCOUNT': '가상계좌',
+                'MOBILE_PHONE': '휴대폰 결제'
+            };
+            return methods[method] || method;
+        }
+
+        // 페이지 로드 시 결제 승인
+        if (paymentKey && orderId && amount) {
+            confirmPayment();
+        } else {
+            alert('잘못된 접근입니다.');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

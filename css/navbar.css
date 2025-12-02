@@ -1,0 +1,485 @@
+/* 네비게이션 바 */
+.navbar {
+    background-color: var(--secondary-color);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo h1 {
+    font-size: 1.5rem;
+    color: var(--gold);
+    font-weight: 700;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+    color: var(--highlight-color);
+    background-color: rgba(233, 69, 96, 0.1);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.cart-icon {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.2rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.cart-icon:hover {
+    color: var(--highlight-color);
+}
+
+#cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--highlight-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: 700;
+}
+
+.login-btn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.login-btn:hover {
+    background-color: var(--highlight-color);
+    transform: translateY(-2px);
+}
+
+/* 사용자 메뉴 드롭다운 */
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-menu-btn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-menu-btn:hover {
+    background-color: var(--highlight-color);
+    transform: translateY(-2px);
+}
+
+.user-menu-btn::after {
+    content: '▼';
+    font-size: 0.7rem;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: rgba(22, 33, 62, 0.98);
+    border-radius: 10px;
+    min-width: 200px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.user-menu.active .user-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.user-dropdown a,
+.user-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    color: var(--text-color);
+    text-decoration: none;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-dropdown a:last-child,
+.user-dropdown button:last-child {
+    border-bottom: none;
+}
+
+.user-dropdown a:hover,
+.user-dropdown button:hover {
+    background-color: rgba(233, 69, 96, 0.1);
+    color: var(--highlight-color);
+}
+
+.user-dropdown button {
+    font-family: inherit;
+}
+
+.user-dropdown-icon {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+/* 모바일 메뉴 버튼 (기본적으로 숨김) */
+.mobile-menu-button {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.mobile-menu-button span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-button:hover span {
+    background-color: var(--highlight-color);
+}
+
+/* 장바구니 오버레이 및 팝업 */
+.cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    z-index: 1500;
+}
+
+.cart-overlay.open {
+    display: block;
+}
+
+.cart-dropdown {
+    background-color: rgba(22, 33, 62, 0.98);
+    border-radius: 12px;
+    width: 480px;
+    max-width: 90vw;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    position: absolute;
+    top: 60px;  /* 네비바 아래 */
+    right: 20px; /* 오른쪽 정렬 */
+}
+
+.cart-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cart-header-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gold);
+}
+
+.cart-header-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.cart-header-close:hover {
+    background: rgba(233, 69, 96, 0.15);
+    color: var(--highlight-color);
+}
+
+.cart-body {
+    padding: 10px 18px 0;
+    overflow-y: auto;
+}
+
+.cart-empty {
+    padding: 20px 0 24px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* 장바구니 아이템 한 줄 - Steam 스타일 */
+.cart-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.cart-item:last-child {
+    margin-bottom: 0;
+}
+
+/* 체크박스 */
+.cart-item-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+/* 게임 이미지 - 2:3 비율 (세로로 긴 이미지) */
+.cart-item-image {
+    width: 80px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* 게임 정보 영역 */
+.cart-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    padding: 4px 0;
+}
+
+/* 게임 이름 - 왼쪽 위 */
+.cart-item-name {
+    font-size: 1rem;
+    color: var(--text-color);
+    font-weight: 600;
+    margin-bottom: auto;
+}
+
+/* 가격 영역 - 오른쪽 */
+.cart-item-pricing {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+/* 원가 취소선 */
+.cart-item-original-price {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: line-through;
+}
+
+/* 할인율 + 할인가 */
+.cart-item-discount-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cart-item-discount-rate {
+    background-color: #4c6b22;
+    color: #beee11;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.cart-item-discount-price {
+    font-size: 1.1rem;
+    color: #beee11;
+    font-weight: 700;
+}
+
+/* 쓰레기통 버튼 - 가격 바로 아래 */
+.cart-item-remove {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-item-remove:hover {
+    background: rgba(233, 69, 96, 0.15);
+    color: var(--highlight-color);
+}
+
+.cart-item-remove svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* 푸터 및 합계 영역 */
+.cart-footer {
+    padding: 10px 18px 14px;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cart-summary {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.cart-summary span strong {
+    color: var(--gold);
+}
+
+/* 버튼 두 개: 세로 배치 */
+.cart-footer-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.cart-footer-buttons button {
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 999px;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cart-clear-btn {
+    background-color: rgba(15, 52, 96, 0.9);
+    color: var(--text-color);
+}
+
+.cart-clear-btn:hover {
+    background-color: rgba(31, 75, 132, 0.95);
+}
+
+.cart-checkout-btn {
+    background-color: var(--highlight-color);
+    color: #fff;
+}
+
+.cart-checkout-btn:hover {
+    background-color: #ff6b6b;
+    box-shadow: 0 4px 16px rgba(233, 69, 96, 0.5);
+}
+
+/* 모바일에서 팝업 여백 조정 */
+@media (max-width: 768px) {
+    .cart-dropdown {
+        right: 5%;
+        left: 5%;
+        width: auto;
+        top: 70px;
+    }
+    
+    .cart-item-image {
+        width: 60px;
+        height: 90px;
+    }
+    
+    .cart-item-name {
+        font-size: 0.9rem;
+    }
+    
+    .cart-item-pricing {
+        right: 8px;
+        top: 8px;
+    }
+    
+    .cart-item-remove {
+        right: 8px;
+        bottom: 8px;
+    }
+}

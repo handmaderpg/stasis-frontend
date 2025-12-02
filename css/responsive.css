@@ -1,0 +1,213 @@
+/* 반응형 디자인 */
+
+/* 태블릿 (768px ~ 1024px) */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .game-info {
+        flex-direction: column;
+    }
+    
+    .game-image {
+        flex: 0 0 auto;
+        width: 100%;
+        height: 300px;
+    }
+}
+
+/* 모바일 (768px 이하) */
+@media (max-width: 768px) {
+    /* 네비게이션 */
+    .nav-container {
+        flex-wrap: wrap;
+        position: relative;
+    }
+    
+    .mobile-menu-button {
+        display: flex;
+        order: 3;
+    }
+    
+    .nav-logo {
+        flex: 1;
+    }
+    
+    .nav-logo h1 {
+        font-size: 1.2rem;
+    }
+    
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: var(--secondary-color);
+        padding: 1rem 0;
+        gap: 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .nav-links li {
+        width: 100%;
+    }
+    
+    .nav-links li a {
+        display: block;
+        padding: 1rem 20px;
+        border-radius: 0;
+    }
+    
+    .nav-actions {
+        gap: 1rem;
+    }
+    
+    /* 히어로 */
+    .hero {
+        min-height: 80vh;
+        padding-top: 80px;
+        gap: 30px;
+    }
+    
+    .game-logo {
+        max-width: 280px;
+    }
+    
+    .gameplay-video {
+        width: 95%;
+    }
+    
+    /* 섹션 패딩 축소 */
+    .about-section,
+    .features-section,
+    .purchase-section {
+        padding: 50px 15px;
+    }
+    
+    .about-section h2,
+    .features-section h2 {
+        font-size: 1.8rem;
+    }
+    
+    .intro-text {
+        font-size: 1rem;
+    }
+    
+    /* 특징 카드 */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .feature-card {
+        padding: 25px;
+    }
+    
+    .feature-icon {
+        font-size: 2.5rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.3rem;
+    }
+    
+    /* 구매 섹션 */
+    .purchase-card {
+        padding: 30px 20px;
+    }
+    
+    .purchase-card h2 {
+        font-size: 1.8rem;
+    }
+    
+    .purchase-subtitle {
+        font-size: 1rem;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .game-image {
+        width: 100%;
+        height: 250px;
+    }
+    
+    .game-details h3 {
+        font-size: 1.5rem;
+    }
+    
+    .price {
+        font-size: 2.5rem;
+    }
+    
+    .purchase-btn,
+    .checkout-btn {
+        font-size: 1rem;
+        padding: 12px 25px;
+    }
+    
+    /* 푸터 */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+}
+
+/* 작은 모바일 (480px 이하) */
+@media (max-width: 480px) {
+    .game-logo {
+        max-width: 220px;
+    }
+    
+    .about-section h2,
+    .features-section h2,
+    .purchase-card h2 {
+        font-size: 1.5rem;
+    }
+    
+    .feature-icon {
+        font-size: 2rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .game-details h3 {
+        font-size: 1.3rem;
+    }
+    
+    .price {
+        font-size: 2rem;
+    }
+}
+
+/* 가로 모드 대응 */
+@media (max-height: 600px) and (orientation: landscape) {
+    .hero {
+        min-height: 100vh;
+        padding: 100px 20px 50px;
+    }
+    
+    .game-logo {
+        max-width: 250px;
+    }
+}

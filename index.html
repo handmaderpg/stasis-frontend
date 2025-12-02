@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stasis: Civil War - 고대 아테네 전략 RPG</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>Stasis: Civil War</h1>
+            </div>
+            
+            <button class="mobile-menu-button" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">홈</a></li>
+                <li><a href="news.html">소식</a></li>
+                <li><a href="about.html">소개</a></li>
+                <li><a href="credits.html">크레딧</a></li>
+                <li><a href="wiki.html">위키</a></li>
+                <li><a href="forums.html">포럼</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="#" class="cart-icon">🛒 <span id="cart-count">0</span></a>
+                <a href="login.html" class="login-btn" id="auth-btn">로그인</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 - 로고 + 영상 -->
+    <section class="hero">
+        <!-- 로고 이미지 -->
+        <img src="assets/images/logo.png" alt="Stasis: Civil War Logo" class="game-logo">
+        
+        <!-- 자동재생 동영상 -->
+        <video class="gameplay-video" autoplay loop muted playsinline>
+            <source src="assets/videos/gameplay.mp4" type="video/mp4">
+        </video>
+    </section>
+
+    <!-- 게임 소개 -->
+    <section class="about-section">
+        <div class="container">
+            <h2>게임 소개</h2>
+            <p class="intro-text">
+                기원전 404년, 펠로폰네소스 전쟁의 막바지.<br>
+                아테네는 내부 분열과 외부 압박으로 몰락의 위기에 처해있습니다.<br>
+                당신은 이 혼란의 시대를 어떻게 헤쳐나갈 것인가?
+            </p>
+        </div>
+    </section>
+
+    <!-- 주요 특징 -->
+    <section class="features-section">
+        <div class="container">
+            <h2>주요 특징</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>3단계 시간 시스템</h3>
+                    <p>전략적 타임라인, 실시간 전투, 순간의 선택이 역사를 바꿉니다</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Big5 성격 시스템</h3>
+                    <p>당신의 선택이 캐릭터의 성격을 형성하고, 대화와 전투에 영향을 미칩니다</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>철학적 대화</h3>
+                    <p>소크라테스, 플라톤과 대화하며 고대 그리스 철학을 체험하세요</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚔️</div>
+                    <h3>전략적 전투</h3>
+                    <p>역사적 전투를 재현하고, 당신만의 전략으로 승리를 쟁취하세요</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 구매 섹션 -->
+    <section class="purchase-section" id="purchase">
+        <div class="container">
+            <div class="purchase-card">
+                <h2>지금 바로 시작하세요</h2>
+                <p class="purchase-subtitle">고대 아테네의 운명을 당신의 손으로</p>
+                
+                <div class="game-info">
+                    <div class="game-image">
+                        <img src="assets/images/game-cover.jpg" alt="Stasis: Civil War" onerror="this.style.display='none'">
+                    </div>
+                    <div class="game-details">
+                        <h3>Stasis: Civil War</h3>
+                        <p class="game-size">파일 크기: 약 150MB</p>
+                        <p class="game-platform">플랫폼: Windows, Mac, Linux</p>
+                        <div class="price-tag">
+                            <span class="price-original">₩10,000</span>
+                            <span class="price-discount">99% 할인</span>
+                            <span class="price">₩100</span>
+                        </div>
+                        <button class="purchase-btn" id="purchase-btn">장바구니에 담기</button>
+                        <button class="checkout-btn" id="checkout-btn">바로 구매하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Stasis: Civil War</h4>
+                    <p>© 2025 All rights reserved.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>링크</h4>
+                    <ul>
+                        <li><a href="about.html">게임 소개</a></li>
+                        <li><a href="wiki.html">위키</a></li>
+                        <li><a href="forums.html">커뮤니티</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>고객 지원</h4>
+                    <ul>
+                        <li><a href="#">자주 묻는 질문</a></li>
+                        <li><a href="#">환불 정책</a></li>
+                        <li><a href="#">이용 약관</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/APIClient.js"></script>
+    <script src="js/AuthModule.js"></script>
+    <script src="js/CartModule.js"></script>
+    <script>
+        // 모바일 메뉴 토글
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('nav-links').classList.toggle('active');
+        });
+
+        // 구매 버튼 - 이미지, 원가, 할인가 추가
+        document.getElementById('purchase-btn').addEventListener('click', function() {
+            CartModule.addItem(
+                'stasis-civil-war',           // gameId
+                'Stasis: Civil War',          // gameName
+                100,                          // 할인가
+                10000,                        // 원가
+                'assets/images/game-cover.jpg' // 이미지 URL
+            );
+            alert('장바구니에 추가되었습니다!');
+        });
+
+        document.getElementById('checkout-btn').addEventListener('click', function() {
+            if (!AuthModule.isLoggedIn()) {
+                alert('로그인이 필요합니다.');
+                window.location.href = 'login.html';
+                return;
+            }
+            window.location.href = 'checkout.html';
+        });
+    </script>
+</body>
+</html>

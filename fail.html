@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결제 실패 - Stasis: Civil War</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <style>
+        .result-section {
+            min-height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .result-container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .result-card {
+            background-color: rgba(22, 33, 62, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            text-align: center;
+        }
+
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .result-icon.fail {
+            color: var(--highlight-color);
+        }
+
+        .result-title {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .result-message {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .error-info {
+            background-color: rgba(233, 69, 96, 0.1);
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .error-code {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            font-size: 1rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--highlight-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #1e4a7a;
+            transform: translateY(-2px);
+        }
+
+        .help-text {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .help-text a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .help-text a:hover {
+            color: var(--highlight-color);
+        }
+
+        @media (max-width: 768px) {
+            .result-card {
+                padding: 40px 30px;
+            }
+
+            .result-icon {
+                font-size: 4rem;
+            }
+
+            .result-title {
+                font-size: 1.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1><a href="index.html" style="color: var(--gold); text-decoration: none;">Stasis: Civil War</a></h1>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 결과 섹션 -->
+    <section class="result-section">
+        <div class="result-container">
+            <div class="result-card">
+                <div class="result-icon fail">✕</div>
+                <h1 class="result-title">결제가 실패했습니다</h1>
+                <p class="result-message">
+                    결제 처리 중 문제가 발생했습니다.<br>
+                    다시 시도하거나 다른 결제 수단을 이용해주세요.
+                </p>
+
+                <div class="error-info" id="error-info" style="display: none;">
+                    <div class="error-code" id="error-code"></div>
+                    <div class="error-message" id="error-message"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="checkout.html" class="btn btn-primary">다시 시도</a>
+                    <a href="index.html" class="btn btn-secondary">홈으로</a>
+                </div>
+
+                <div class="help-text">
+                    <p>문제가 계속되면 <a href="#">고객센터</a>로 문의해주세요.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // URL 파라미터에서 오류 정보 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorCode = urlParams.get('code');
+        const errorMessage = urlParams.get('message');
+
+        // 오류 정보가 있으면 표시
+        if (errorCode || errorMessage) {
+            const errorInfo = document.getElementById('error-info');
+            errorInfo.style.display = 'block';
+
+            if (errorCode) {
+                document.getElementById('error-code').textContent = `오류 코드: ${errorCode}`;
+            }
+
+            if (errorMessage) {
+                document.getElementById('error-message').textContent = decodeURIComponent(errorMessage);
+            }
+        }
+
+        // 일반적인 오류 메시지 매핑
+        const errorMessages = {
+            'INVALID_REQUEST': '잘못된 요청입니다.',
+            'NOT_FOUND': '결제 정보를 찾을 수 없습니다.',
+            'FORBIDDEN': '권한이 없습니다.',
+            'ALREADY_PROCESSED': '이미 처리된 결제입니다.',
+            'INVALID_CARD': '유효하지 않은 카드입니다.',
+            'INSUFFICIENT_FUNDS': '잔액이 부족합니다.',
+            'INVALID_PASSWORD': '비밀번호가 틀렸습니다.',
+            'EXCEED_MAX_AMOUNT': '결제 한도를 초과했습니다.',
+            'TIMEOUT': '결제 시간이 초과되었습니다.',
+            'USER_CANCEL': '사용자가 결제를 취소했습니다.'
+        };
+
+        // 오류 코드에 따른 친화적인 메시지 표시
+        if (errorCode && errorMessages[errorCode]) {
+            document.getElementById('error-message').textContent = errorMessages[errorCode];
+        }
+    </script>
+</body>
+</html>

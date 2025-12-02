@@ -1,0 +1,339 @@
+/* 전역 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #1a1a2e;
+    --secondary-color: #16213e;
+    --accent-color: #0f3460;
+    --highlight-color: #e94560;
+    --text-color: #eaeaea;
+    --text-secondary: #a0a0a0;
+    --gold: #d4af37;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* 전체 페이지 고정 배경 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(3px) brightness(0.8);
+    z-index: -2;
+}
+
+/* 백업 배경 (이미지 없을 때) */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    z-index: -3;
+}
+
+/* 배경 애니메이션 */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 히어로 섹션 - 로고 + 영상 */
+.hero {
+    /* min-height: 90vh; 삭제 */
+    padding: 80px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.game-logo {
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.8));
+    z-index: 1;
+}
+
+.gameplay-video {
+    max-width: 900px;
+    width: 90%;
+    border-radius: 15px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    z-index: 1;
+}
+
+/* 소개 섹션 */
+.about-section {
+    padding: 80px 20px;
+    background-color: rgba(22, 33, 62, 0.7);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.about-section h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--gold);
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+/* 특징 섹션 */
+.features-section {
+    padding: 80px 20px;
+    background-color: rgba(26, 26, 46, 0.7);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.features-section h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--gold);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background-color: var(--secondary-color);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(233, 69, 96, 0.2);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* 구매 섹션 */
+.purchase-section {
+    padding: 80px 20px;
+    background: rgba(15, 52, 96, 0.7);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.purchase-card {
+    background-color: var(--secondary-color);
+    border-radius: 15px;
+    padding: 50px;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.purchase-card h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--gold);
+}
+
+.purchase-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+}
+
+.game-info {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.game-image {
+    flex: 0 0 300px;
+    height: 400px;
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.game-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.game-details {
+    flex: 1;
+}
+
+.game-details h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--gold);
+}
+
+.game-size, .game-platform {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.price-tag {
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.price-original {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.price-discount {
+    background-color: #ff0000;  /* 빨간색 */
+    color: white;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.price {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ff0000;  /* 빨간색 */
+}
+
+.purchase-btn, .checkout-btn {
+    width: 100%;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.purchase-btn {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.purchase-btn:hover {
+    background-color: #1e4a7a;
+    transform: translateY(-2px);
+}
+
+.checkout-btn {
+    background-color: var(--highlight-color);
+    color: white;
+}
+
+.checkout-btn:hover {
+    background-color: #ff6b6b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+}
+
+/* 푸터 */
+.footer {
+    background-color: rgba(22, 33, 62, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 50px 20px 30px;
+    border-top: 2px solid var(--accent-color);
+    position: relative;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-section h4 {
+    color: var(--gold);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: var(--highlight-color);
+}
+
+.footer-section p {
+    color: var(--text-secondary);
+}

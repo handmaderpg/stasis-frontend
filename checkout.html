@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결제하기 - Stasis: Civil War</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <style>
+        .checkout-section {
+            min-height: calc(100vh - 70px);
+            padding: 60px 20px;
+        }
+
+        .checkout-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .checkout-card {
+            background-color: rgba(22, 33, 62, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .checkout-card h2 {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .order-summary {
+            margin-bottom: 30px;
+        }
+
+        .order-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .order-item-image {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .order-item-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .order-item-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .order-item-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .order-item-original {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: line-through;
+        }
+
+        .order-item-discount {
+            background-color: #4c6b22;
+            color: #beee11;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .order-item-final {
+            font-size: 1.2rem;
+            color: #beee11;
+            font-weight: 700;
+        }
+
+        .price-summary {
+            border-top: 2px solid rgba(212, 175, 55, 0.3);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .price-row.total {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            padding-top: 15px;
+            margin-top: 10px;
+        }
+
+        .payment-method {
+            margin: 30px 0;
+        }
+
+        .payment-method h3 {
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .payment-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .payment-btn {
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            background-color: rgba(26, 26, 46, 0.6);
+            color: var(--text-color);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .payment-btn:hover {
+            border-color: var(--gold);
+            background-color: rgba(26, 26, 46, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .payment-btn.selected {
+            border-color: var(--highlight-color);
+            background-color: rgba(233, 69, 96, 0.2);
+        }
+
+        .payment-icon {
+            font-size: 1.5rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 18px 30px;
+            border-radius: 50px;
+            border: none;
+            background-color: var(--highlight-color);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #ff6b6b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+        }
+
+        .checkout-btn:disabled {
+            background-color: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .notice {
+            background-color: rgba(212, 175, 55, 0.1);
+            border-left: 3px solid var(--gold);
+            padding: 15px;
+            border-radius: 5px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-card {
+                padding: 25px;
+            }
+
+            .order-item {
+                flex-direction: column;
+            }
+
+            .order-item-image {
+                width: 100%;
+                height: 200px;
+            }
+
+            .payment-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1><a href="index.html" style="color: var(--gold); text-decoration: none;">Stasis: Civil War</a></h1>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="cart-icon">🛒 <span id="cart-count">0</span></a>
+                <a href="login.html" class="login-btn" id="auth-btn">로그인</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 결제 섹션 -->
+    <section class="checkout-section">
+        <div class="checkout-container">
+            <div class="checkout-card">
+                <h2>주문 결제</h2>
+                
+                <!-- 주문 상품 목록 -->
+                <div class="order-summary">
+                    <h3 style="color: var(--gold); margin-bottom: 15px;">주문 상품</h3>
+                    <div id="order-items"></div>
+                    
+                    <!-- 가격 요약 -->
+                    <div class="price-summary">
+                        <div class="price-row">
+                            <span>상품 금액</span>
+                            <span id="subtotal">₩0</span>
+                        </div>
+                        <div class="price-row">
+                            <span>할인 금액</span>
+                            <span id="discount" style="color: #beee11;">-₩0</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>최종 결제 금액</span>
+                            <span id="total">₩0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 결제 수단 선택 -->
+                <div class="payment-method">
+                    <h3>결제 수단 선택</h3>
+                    <div class="payment-buttons">
+                        <button class="payment-btn" data-method="CARD">
+                            <span class="payment-icon">💳</span>
+                            <span>신용/체크카드</span>
+                        </button>
+                        <button class="payment-btn" data-method="TRANSFER">
+                            <span class="payment-icon">🏦</span>
+                            <span>계좌이체</span>
+                        </button>
+                        <button class="payment-btn" data-method="VIRTUAL_ACCOUNT">
+                            <span class="payment-icon">🧾</span>
+                            <span>가상계좌</span>
+                        </button>
+                        <button class="payment-btn" data-method="MOBILE_PHONE">
+                            <span class="payment-icon">📱</span>
+                            <span>휴대폰</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 결제하기 버튼 -->
+                <button class="checkout-btn" id="payment-button" disabled>
+                    결제하기
+                </button>
+
+                <div class="notice">
+                    ⚠️ 이 결제는 토스페이먼츠 테스트 환경에서 진행됩니다. 실제 결제가 발생하지 않습니다.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 토스페이먼츠 SDK -->
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+    <script src="js/APIClient.js"></script>
+    <script src="js/AuthModule.js"></script>
+    <script src="js/CartModule.js"></script>
+    <script>
+        // 토스페이먼츠 클라이언트 키 (테스트용)
+        const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+        const tossPayments = TossPayments(clientKey);
+
+        let selectedPaymentMethod = null;
+        let orderItems = [];
+        let totalAmount = 0;
+
+        // 페이지 로드 시 실행
+        document.addEventListener('DOMContentLoaded', () => {
+            // 로그인 확인
+            if (!AuthModule.isLoggedIn()) {
+                alert('로그인이 필요합니다.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // 장바구니에서 선택된 상품 가져오기
+            const selectedItemsStr = localStorage.getItem('selected_cart_items');
+            if (!selectedItemsStr) {
+                // 장바구니에서 직접 구매하지 않은 경우, 전체 장바구니 가져오기
+                orderItems = CartModule.getCart();
+            } else {
+                orderItems = JSON.parse(selectedItemsStr);
+            }
+
+            if (orderItems.length === 0) {
+                alert('주문할 상품이 없습니다.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // 주문 상품 렌더링
+            renderOrderItems();
+
+            // 결제 수단 선택 이벤트
+            document.querySelectorAll('.payment-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.payment-btn').forEach(b => 
+                        b.classList.remove('selected')
+                    );
+                    this.classList.add('selected');
+                    selectedPaymentMethod = this.dataset.method;
+                    document.getElementById('payment-button').disabled = false;
+                });
+            });
+
+            // 결제하기 버튼
+            document.getElementById('payment-button').addEventListener('click', processPayment);
+        });
+
+        // 주문 상품 렌더링
+        function renderOrderItems() {
+            const container = document.getElementById('order-items');
+            container.innerHTML = '';
+
+            let subtotal = 0;
+            let originalTotal = 0;
+
+            orderItems.forEach(item => {
+                subtotal += item.price;
+                originalTotal += item.originalPrice;
+
+                const discountRate = Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100);
+
+                const itemEl = document.createElement('div');
+                itemEl.className = 'order-item';
+                itemEl.innerHTML = `
+                    <img src="${item.imageUrl}" alt="${item.gameName}" class="order-item-image" onerror="this.src='assets/images/game-cover.jpg'">
+                    <div class="order-item-details">
+                        <div class="order-item-name">${item.gameName}</div>
+                        <div class="order-item-price">
+                            <span class="order-item-original">${CartModule.formatPrice(item.originalPrice)}</span>
+                            <span class="order-item-discount">-${discountRate}%</span>
+                            <span class="order-item-final">${CartModule.formatPrice(item.price)}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(itemEl);
+            });
+
+            totalAmount = subtotal;
+            const discountAmount = originalTotal - subtotal;
+
+            document.getElementById('subtotal').textContent = CartModule.formatPrice(originalTotal);
+            document.getElementById('discount').textContent = '-' + CartModule.formatPrice(discountAmount);
+            document.getElementById('total').textContent = CartModule.formatPrice(totalAmount);
+        }
+
+        // 결제 처리
+        async function processPayment() {
+            if (!selectedPaymentMethod) {
+                alert('결제 수단을 선택해주세요.');
+                return;
+            }
+
+            try {
+                const user = AuthModule.getCurrentUser();
+                const orderId = 'ORDER_' + Date.now();
+                const orderName = orderItems.length === 1 
+                    ? orderItems[0].gameName 
+                    : `${orderItems[0].gameName} 외 ${orderItems.length - 1}건`;
+
+                // 토스페이먼츠 결제창 호출
+                await tossPayments.requestPayment(selectedPaymentMethod, {
+                    amount: totalAmount,
+                    orderId: orderId,
+                    orderName: orderName,
+                    customerName: user.username || user.email,
+                    customerEmail: user.email,
+                    successUrl: window.location.origin + '/success.html',
+                    failUrl: window.location.origin + '/fail.html',
+                });
+            } catch (error) {
+                console.error('Payment error:', error);
+                if (error.code === 'USER_CANCEL') {
+                    alert('결제를 취소하셨습니다.');
+                } else {
+                    alert('결제 처리 중 오류가 발생했습니다: ' + error.message);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
